@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo.Network.RPC.Tests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo.Plugins.Storage.Tests", "tests\Neo.Plugins.Storage.Tests\Neo.Plugins.Storage.Tests.csproj", "{9E7EA895-302A-4C0C-BA9B-54F9A67AD75C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceMonitor", "src\PerformanceMonitor\PerformanceMonitor.csproj", "{4837193E-0A6E-4754-B042-8E694BC01794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{9E7EA895-302A-4C0C-BA9B-54F9A67AD75C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E7EA895-302A-4C0C-BA9B-54F9A67AD75C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E7EA895-302A-4C0C-BA9B-54F9A67AD75C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4837193E-0A6E-4754-B042-8E694BC01794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4837193E-0A6E-4754-B042-8E694BC01794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4837193E-0A6E-4754-B042-8E694BC01794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4837193E-0A6E-4754-B042-8E694BC01794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{1403FFE9-4265-4269-8E3D-5A79EFD108CA} = {97E81C78-1637-481F-9485-DA1225E94C23}
 		{D52460B3-AB5C-4D07-B400-9E7ADCB01FF5} = {59D802AB-C552-422A-B9C3-64D329FBCDCC}
 		{9E7EA895-302A-4C0C-BA9B-54F9A67AD75C} = {59D802AB-C552-422A-B9C3-64D329FBCDCC}
+		{4837193E-0A6E-4754-B042-8E694BC01794} = {97E81C78-1637-481F-9485-DA1225E94C23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61D3ADE6-BBFC-402D-AB42-1C71C9F9EDE3}

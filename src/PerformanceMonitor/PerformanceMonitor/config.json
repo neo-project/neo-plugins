@@ -1,0 +1,5 @@
+{
+    "PluginConfiguration": {
+        "Path": "PerformanceMonitor_{0}"
+    }
+}
