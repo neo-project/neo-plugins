@@ -10,10 +10,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Messages\" />
+    <None Remove="Messages\RecoryMessage\" />
+    <None Remove="Consts\" />
+    <None Remove="Consensus\" />
+    <None Remove="Messages\TXListMessage\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="DBFTPlugin\config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Messages\" />
+    <Folder Include="Messages\RecoveryMessage\" />
+    <Folder Include="Types\" />
+    <Folder Include="Consensus\" />
+    <Folder Include="Messages\TXListMessage\" />
+  </ItemGroup>
 </Project>

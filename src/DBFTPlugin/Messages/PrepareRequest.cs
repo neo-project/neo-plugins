@@ -1,4 +1,5 @@
 using Neo.IO;
+using Neo.Network.P2P.Payloads;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Neo.Consensus
         public UInt256 PrevHash;
         public ulong Timestamp;
         public UInt256[] TransactionHashes;
+        public ExtensiblePayload[] TXLists;
 
         public override int Size => base.Size
             + sizeof(uint)                      //Version

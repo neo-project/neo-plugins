@@ -17,7 +17,7 @@ using static Neo.Consensus.RecoveryMessage;
 
 namespace Neo.Consensus
 {
-    public class ConsensusContext : IDisposable, ISerializable
+    public  partial class ConsensusContext : IDisposable, ISerializable
     {
         /// <summary>
         /// Key for saving consensus state.
@@ -30,10 +30,16 @@ namespace Neo.Consensus
         public int MyIndex;
         public UInt256[] TransactionHashes;
         public Dictionary<UInt256, Transaction> Transactions;
+        //public Dictionary<uint, UInt256[]> validTXList;
+
+        public Dictionary<uint, UInt256[]> TXListVerification;
+        public ExtensiblePayload[] ValidTXListPayloads;
+        public ExtensiblePayload[] TXListPayloads;
         public ExtensiblePayload[] PreparationPayloads;
         public ExtensiblePayload[] CommitPayloads;
         public ExtensiblePayload[] ChangeViewPayloads;
         public ExtensiblePayload[] LastChangeViewPayloads;
+
         // LastSeenMessage array stores the height of the last seen message, for each validator.
         // if this node never heard from validator i, LastSeenMessage[i] will be -1.
         public Dictionary<ECPoint, uint> LastSeenMessage { get; private set; }
@@ -80,12 +86,16 @@ namespace Neo.Consensus
         }
 
         #region Consensus States
+        //public bool TXHashSentOrReceived => TXListPayloads[Block.PrimaryIndex] != null;
+        public bool TXHashResponseSent => !WatchOnly && TXListPayloads[MyIndex] != null; // Indicating that the node has sent the TXHash
+
         public bool RequestSentOrReceived => PreparationPayloads[Block.PrimaryIndex] != null;
         public bool ResponseSent => !WatchOnly && PreparationPayloads[MyIndex] != null;
         public bool CommitSent => !WatchOnly && CommitPayloads[MyIndex] != null;
         public bool BlockSent => Block.Transactions != null;
         public bool ViewChanging => !WatchOnly && GetMessage<ChangeView>(ChangeViewPayloads[MyIndex])?.NewViewNumber > ViewNumber;
         public bool NotAcceptingPayloadsDueToViewChanging => ViewChanging && !MoreThanFNodesCommittedOrLost;
+
         // A possible attack can happen if the last node to commit is malicious and either sends change view after his
         // commit to stall nodes in a higher view, or if he refuses to send recovery messages. In addition, if a node
         // asking change views loses network or crashes and comes back when nodes are committed in more than one higher
@@ -255,48 +265,7 @@ namespace Neo.Consensus
                 return true;
             }
         }
-
-        public ExtensiblePayload MakeChangeView(ChangeViewReason reason)
-        {
-            return ChangeViewPayloads[MyIndex] = MakeSignedPayload(new ChangeView
-            {
-                Reason = reason,
-                Timestamp = TimeProvider.Current.UtcNow.ToTimestampMS()
-            });
-        }
-
-        public ExtensiblePayload MakeCommit()
-        {
-            return CommitPayloads[MyIndex] ?? (CommitPayloads[MyIndex] = MakeSignedPayload(new Commit
-            {
-                Signature = EnsureHeader().Sign(keyPair, neoSystem.Settings.Network)
-            }));
-        }
-
-        private ExtensiblePayload MakeSignedPayload(ConsensusMessage message)
-        {
-            message.BlockIndex = Block.Index;
-            message.ValidatorIndex = (byte)MyIndex;
-            message.ViewNumber = ViewNumber;
-            ExtensiblePayload payload = CreatePayload(message, null);
-            SignPayload(payload);
-            return payload;
-        }
-
-        private void SignPayload(ExtensiblePayload payload)
-        {
-            ContractParametersContext sc;
-            try
-            {
-                sc = new ContractParametersContext(neoSystem.StoreView, payload, dbftSettings.Network);
-                wallet.Sign(sc);
-            }
-            catch (InvalidOperationException)
-            {
-                return;
-            }
-            payload.Witness = sc.GetWitnesses()[0];
-        }
+       
 
         /// <summary>
         /// Return the expected block size
@@ -331,101 +300,6 @@ namespace Neo.Consensus
                 UInt160.Length +    // NextConsensus
                 1 + _witnessSize +  // Witness
                 IO.Helper.GetVarSize(expectedTransactions);
-        }
-
-        /// <summary>
-        /// Prevent that block exceed the max size
-        /// </summary>
-        /// <param name="txs">Ordered transactions</param>
-        internal void EnsureMaxBlockLimitation(IEnumerable<Transaction> txs)
-        {
-            uint maxTransactionsPerBlock = neoSystem.Settings.MaxTransactionsPerBlock;
-
-            // Limit Speaker proposal to the limit `MaxTransactionsPerBlock` or all available transactions of the mempool
-            txs = txs.Take((int)maxTransactionsPerBlock);
-            List<UInt256> hashes = new List<UInt256>();
-            Transactions = new Dictionary<UInt256, Transaction>();
-            VerificationContext = new TransactionVerificationContext();
-
-            // Expected block size
-            var blockSize = GetExpectedBlockSizeWithoutTransactions(txs.Count());
-            var blockSystemFee = 0L;
-
-            // Iterate transaction until reach the size or maximum system fee
-            foreach (Transaction tx in txs)
-            {
-                // Check if maximum block size has been already exceeded with the current selected set
-                blockSize += tx.Size;
-                if (blockSize > dbftSettings.MaxBlockSize) break;
-
-                // Check if maximum block system fee has been already exceeded with the current selected set
-                blockSystemFee += tx.SystemFee;
-                if (blockSystemFee > dbftSettings.MaxBlockSystemFee) break;
-
-                hashes.Add(tx.Hash);
-                Transactions.Add(tx.Hash, tx);
-                VerificationContext.AddTransaction(tx);
-            }
-
-            TransactionHashes = hashes.ToArray();
-        }
-
-        public ExtensiblePayload MakePrepareRequest()
-        {
-            EnsureMaxBlockLimitation(neoSystem.MemPool.GetSortedVerifiedTransactions());
-            Block.Header.Timestamp = Math.Max(TimeProvider.Current.UtcNow.ToTimestampMS(), PrevHeader.Timestamp + 1);
-
-            return PreparationPayloads[MyIndex] = MakeSignedPayload(new PrepareRequest
-            {
-                Version = Block.Version,
-                PrevHash = Block.PrevHash,
-                Timestamp = Block.Timestamp,
-                TransactionHashes = TransactionHashes
-            });
-        }
-
-        public ExtensiblePayload MakeRecoveryRequest()
-        {
-            return MakeSignedPayload(new RecoveryRequest
-            {
-                Timestamp = TimeProvider.Current.UtcNow.ToTimestampMS()
-            });
-        }
-
-        public ExtensiblePayload MakeRecoveryMessage()
-        {
-            PrepareRequest prepareRequestMessage = null;
-            if (TransactionHashes != null)
-            {
-                prepareRequestMessage = new PrepareRequest
-                {
-                    Version = Block.Version,
-                    PrevHash = Block.PrevHash,
-                    ViewNumber = ViewNumber,
-                    Timestamp = Block.Timestamp,
-                    BlockIndex = Block.Index,
-                    TransactionHashes = TransactionHashes
-                };
-            }
-            return MakeSignedPayload(new RecoveryMessage
-            {
-                ChangeViewMessages = LastChangeViewPayloads.Where(p => p != null).Select(p => GetChangeViewPayloadCompact(p)).Take(M).ToDictionary(p => p.ValidatorIndex),
-                PrepareRequestMessage = prepareRequestMessage,
-                // We only need a PreparationHash set if we don't have the PrepareRequest information.
-                PreparationHash = TransactionHashes == null ? PreparationPayloads.Where(p => p != null).GroupBy(p => GetMessage<PrepareResponse>(p).PreparationHash, (k, g) => new { Hash = k, Count = g.Count() }).OrderByDescending(p => p.Count).Select(p => p.Hash).FirstOrDefault() : null,
-                PreparationMessages = PreparationPayloads.Where(p => p != null).Select(p => GetPreparationPayloadCompact(p)).ToDictionary(p => p.ValidatorIndex),
-                CommitMessages = CommitSent
-                    ? CommitPayloads.Where(p => p != null).Select(p => GetCommitPayloadCompact(p)).ToDictionary(p => p.ValidatorIndex)
-                    : new Dictionary<byte, CommitPayloadCompact>()
-            });
-        }
-
-        public ExtensiblePayload MakePrepareResponse()
-        {
-            return PreparationPayloads[MyIndex] = MakeSignedPayload(new PrepareResponse
-            {
-                PreparationHash = PreparationPayloads[Block.PrimaryIndex].Hash
-            });
         }
 
         public void Reset(byte viewNumber)
