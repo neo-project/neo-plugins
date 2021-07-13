@@ -12,4 +12,13 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <FormatOnLinux Condition="!Exists('$(HOME)\.dotnet\tools\dotnet-format')">False</FormatOnLinux>
+    <FormatOnWin Condition="!Exists('$(USERPROFILE)\.dotnet\tools\dotnet-format.exe')">False</FormatOnWin>
+   </PropertyGroup>
+
+  <Target Name="PreBuild" Condition="$(BuildingInsideVisualStudio) == 'True' AND ($(FormatOnLinux)!=False Or $(FormatOnWin) != False) " BeforeTargets="PreBuildEvent">
+    <Exec Command="dotnet format" />
+  </Target>
+
 </Project>
