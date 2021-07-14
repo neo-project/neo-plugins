@@ -1,0 +1,7 @@
+{
+  "PluginConfiguration": {
+    "Network": 5195086,
+    "Path": "Data_MultiSigInbox_{0}",
+    "AutoStart": false
+  }
+}

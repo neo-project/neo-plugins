@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBFTPlugin", "src\DBFTPlugi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Neo.Plugins.RpcServer.Tests", "tests\Neo.Plugins.RpcServer.Tests\Neo.Plugins.RpcServer.Tests.csproj", "{0DDAF738-0FD3-40A7-A433-C514BCDDF542}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiSigInbox", "src\MultiSigInbox\MultiSigInbox.csproj", "{56452BCF-38ED-46AB-84B0-83EC234DE6D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{0DDAF738-0FD3-40A7-A433-C514BCDDF542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DDAF738-0FD3-40A7-A433-C514BCDDF542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DDAF738-0FD3-40A7-A433-C514BCDDF542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56452BCF-38ED-46AB-84B0-83EC234DE6D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56452BCF-38ED-46AB-84B0-83EC234DE6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56452BCF-38ED-46AB-84B0-83EC234DE6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56452BCF-38ED-46AB-84B0-83EC234DE6D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{149822EC-4E0C-425F-A032-4196B615BFEB} = {59D802AB-C552-422A-B9C3-64D329FBCDCC}
 		{90185D3E-4813-4BC1-98FE-26FD34311403} = {97E81C78-1637-481F-9485-DA1225E94C23}
 		{0DDAF738-0FD3-40A7-A433-C514BCDDF542} = {59D802AB-C552-422A-B9C3-64D329FBCDCC}
+		{56452BCF-38ED-46AB-84B0-83EC234DE6D4} = {97E81C78-1637-481F-9485-DA1225E94C23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61D3ADE6-BBFC-402D-AB42-1C71C9F9EDE3}
