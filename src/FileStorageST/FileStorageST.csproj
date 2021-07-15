@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Neo.FileStorage.Storage</PackageId>
+    <RootNamespace>Neo.FileStorage.Storage</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="Storage\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Services\Control\Service\service.proto" GrpcServices="Both" Link="Services\Control\Service\service.proto" />
+    <Protobuf Include="Services\Control\Service\types.proto" GrpcServices="None" Link="Services\Control\Service\types.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.Tools" Version="2.36.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="NeoFS.API" Version="0.0.59" />
+    <PackageReference Include="Neo.ConsoleService" Version="1.0.0" />
+    <PackageReference Include="ZstdNet" Version="1.4.5" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\FileStorageBase\FileStorageBase.csproj" />
+  </ItemGroup>
+
+</Project>

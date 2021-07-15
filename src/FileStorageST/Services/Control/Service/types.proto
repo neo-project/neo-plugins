@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package control;
+
+option go_package = "github.com/nspcc-dev/neofs-node/pkg/services/control";
+option csharp_namespace = "Neo.FileStorage.Storage.Services.Control.Service";
+
+// Signature of some message.
+message Signature {
+    // Public key used for signing.
+    bytes key = 1 [json_name = "key"];
+
+    // Binary signature.
+    bytes sign = 2 [json_name = "signature"];
+}
+
+// Status of the storage node in the NeoFS network map.
+enum NetmapStatus {
+    // Undefined status, default value.
+    STATUS_UNDEFINED = 0;
+
+    // Node is online.
+    ONLINE = 1;
+
+    // Node is offline.
+    OFFLINE = 2;
+}
+
+// NeoFS node description.
+message NodeInfo {
+    // Public key of the NeoFS node in a binary format.
+    bytes public_key = 1 [json_name = "publicKey"];
+
+    // Ways to connect to a node.
+    string address = 2 [json_name = "address"];
+
+    // Administrator-defined Attributes of the NeoFS Storage Node.
+    //
+    // `Attribute` is a Key-Value metadata pair. Key name must be a valid UTF-8
+    // string. Value can't be empty.
+    //
+    // Node's attributes are mostly used during Storage Policy evaluation to
+    // calculate object's placement and find a set of nodes satisfying policy
+    // requirements. There are some "well-known" node attributes common to all the
+    // Storage Nodes in the network and used implicitly with default values if not
+    // explicitly set:
+    //
+    // * Capacity \
+    //   Total available disk space in Gigabytes.
+    // * Price \
+    //   Price in GAS tokens for storing one GB of data during one Epoch. In node
+    //   attributes it's a string presenting floating point number with comma or
+    //   point delimiter for decimal part. In the Network Map it will be saved as
+    //   64-bit unsigned integer representing number of minimal token fractions.
+    // * Subnet \
+    //   String ID of Node's storage subnet. There can be only one subnet served
+    //   by the Storage Node.
+    // * Locode \
+    //   Node's geographic location in
+    //   [UN/LOCODE](https://www.unece.org/cefact/codesfortrade/codes_index.html)
+    //   format approximated to the nearest point defined in standard.
+    // * Country \
+    //   Country code in
+    //   [ISO 3166-1_alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+    //   format. Calculated automatically from `Locode` attribute
+    // * Region \
+    //   Country's administative subdivision where node is located. Calculated
+    //   automatically from `Locode` attribute based on `SubDiv` field. Presented
+    //   in [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) format.
+    // * City \
+    //   City, town, village or rural area name where node is located written
+    //   without diacritics . Calculated automatically from `Locode` attribute.
+    //
+    // For detailed description of each well-known attribute please see the
+    // corresponding section in NeoFS Technical specification.
+    message Attribute {
+        // Key of the node attribute.
+        string key = 1 [json_name = "key"];
+
+        // Value of the node attribute.
+        string value = 2 [json_name = "value"];
+
+        // Parent keys, if any. For example for `City` it could be `Region` and
+        // `Country`.
+        repeated string parents = 3 [json_name = "parents"];
+    }
+    // Carries list of the NeoFS node attributes in a key-value form. Key name
+    // must be a node-unique valid UTF-8 string. Value can't be empty. NodeInfo
+    // structures with duplicated attribute names or attributes with empty values
+    // will be considered invalid.
+    repeated Attribute attributes = 3 [json_name = "attributes"];
+
+    // Carries state of the NeoFS node.
+    NetmapStatus state = 4 [json_name = "state"];
+}
+
+// Network map structure.
+message Netmap {
+    // Network map revision number.
+    uint64 epoch = 1 [json_name = "epoch"];
+
+    // Nodes presented in network.
+    repeated NodeInfo nodes = 2 [json_name = "nodes"];
+}
+
+// Health status of the storage node application.
+enum HealthStatus {
+    // Undefined status, default value.
+    HEALTH_STATUS_UNDEFINED = 0;
+
+    // Storage node application is starting.
+    STARTING = 1;
+
+    // Storage node application is started and serves all services.
+    READY = 2;
+
+    // Storage node application is shutting down.
+    SHUTTING_DOWN = 3;
+}

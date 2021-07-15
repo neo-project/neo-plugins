@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Neo.FileStorage</PackageId>
+    <RootNamespace>Neo.FileStorage</RootNamespace>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Multiformats.Address" Version="1.1.1" />
+    <PackageReference Include="NeoFS.API" Version="0.0.59" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\LevelDBStore\LevelDBStore.csproj" />
+  </ItemGroup>
+
+</Project>

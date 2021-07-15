@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package control;
+
+import "Services/Control/Service/types.proto";
+
+option go_package = "github.com/nspcc-dev/neofs-node/pkg/services/control";
+option csharp_namespace = "Neo.FileStorage.Storage.Services.Control.Service";
+
+// `ControlService` provides an interface for internal work with the storage node.
+service ControlService {
+    // Performs health check of the storage node.
+    rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
+
+    // Returns network map snapshot of the current NeoFS epoch.
+    rpc NetmapSnapshot (NetmapSnapshotRequest) returns (NetmapSnapshotResponse);
+
+    // Sets status of the storage node in NeoFS network map.
+    rpc SetNetmapStatus (SetNetmapStatusRequest) returns (SetNetmapStatusResponse);
+
+    // Mark objects to be removed from node's local object storage.
+    rpc DropObjects (DropObjectsRequest) returns (DropObjectsResponse);
+}
+
+// Health check request.
+message HealthCheckRequest {
+    // Health check request body.
+    message Body {
+    }
+
+    // Body of health check request message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}
+
+// Health check request.
+message HealthCheckResponse {
+    // Health check response body
+    message Body {
+        // Status of the storage node in NeoFS network map.
+        NetmapStatus netmap_status = 1;
+
+        // Health status of storage node application.
+        HealthStatus health_status = 2;
+    }
+
+    // Body of health check response message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}
+
+// Get netmap snapshot request.
+message NetmapSnapshotRequest {
+    // Get netmap snapshot request body.
+    message Body {
+    }
+
+    // Body of get netmap snapshot request message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}
+
+// Get netmap snapshot request.
+message NetmapSnapshotResponse {
+    // Get netmap snapshot response body
+    message Body {
+        // Structure of the requested network map.
+        Netmap netmap = 1 [json_name = "netmap"];
+    }
+
+    // Body of get netmap snapshot response message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}
+
+// Set netmap status request.
+message SetNetmapStatusRequest {
+    // Set netmap status request body.
+    message Body {
+        // New storage node status in NeoFS network map.
+        NetmapStatus status = 1;
+    }
+
+    // Body of set netmap status request message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}
+
+// Set netmap status response.
+message SetNetmapStatusResponse {
+    // Set netmap status response body
+    message Body {
+    }
+
+    // Body of set netmap status response message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}
+
+// Request to drop the objects.
+message DropObjectsRequest {
+    // Request body structure.
+    message Body {
+        // List of object addresses to be removed.
+        // in NeoFS API binary format.
+        repeated bytes address_list = 1;
+    }
+
+    // Body of the request message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}
+
+// Response to request to drop the objects.
+message DropObjectsResponse {
+    // Response body structure.
+    message Body {
+    }
+
+    // Body of the response message.
+    Body body = 1;
+
+    // Body signature.
+    Signature signature = 2;
+}

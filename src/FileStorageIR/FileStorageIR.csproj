@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Neo.FileStorage.InnerRing</PackageId>
+    <RootNamespace>Neo.FileStorage.InnerRing</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="InnerRing\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="Resources\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.0.3" />
+    <PackageReference Include="NeoFS.API" Version="0.0.59" />
+    <PackageReference Include="Neo.ConsoleService" Version="1.0.0" />
+    <PackageReference Include="NetTopologySuite" Version="2.2.0" />
+    <PackageReference Include="NetTopologySuite.Features" Version="2.1.0" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="2.0.4" />
+    <PackageReference Include="ZstdNet" Version="1.4.5" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\FileStorageBase\FileStorageBase.csproj" />
+  </ItemGroup>
+
+</Project>

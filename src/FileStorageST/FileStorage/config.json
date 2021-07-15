@@ -1,0 +1,166 @@
+{
+  "PluginConfiguration": {
+    "AutoStart": false,
+    "AsInnerRing": false,
+    "AsStorage": true,
+    "WalletPath": "./FSStorage/wallet.json",
+    "Password": "123456",
+    "Contracts": {
+      "Netmap": "0xfe047a1edfff3ace3df076d91b06842f8e4277c1",
+      "NeoFS": "0x970460362a412f251cae676609e9ed250ff8af50",
+      "NeoFSID": "0x75ece59fb1b3013f9956788612839923996b78e6",
+      "Balance": "0xf510d61822675b4b8c1ad119d88c3a62a7cff0ce",
+      "Container": "0x8ffe56432c07567fc7c9bcd83d553522fe2a5919",
+      "Audit": "0xd1e2de753caca814425845cff5480af8fde61147",
+      "Reputation": "0xeb8aabc45d10e96238677d3f8ae687ca0f3d9d23",
+      "Alphabet": [
+        "0x397ef90b1dc608ce4bd3db2c6c8c475d00754059",
+        "0e110f7c59480ea3ee93423f800eb6bc0b3e83f0",
+        "0x24ef41fe6ac95687b5a9d660f82bfba7125b09c5",
+        "0xf739834f4349f5cc9e2f94c37ca9ba6e770916bf",
+        "0xe917ceb2691eef12f4f8146166b04b9f537053b5",
+        "0x9dbeecbc2da7220b0fc546e1294ff52a8c0ad1a9",
+        "0xb341340bef588676c9694dc006beaaf03f7a3bd9"
+      ]
+    },
+    "Votes": [],
+    "Workers": {
+      "Netmap": 10,
+      "NeoFS": 10,
+      "Balance": 10,
+      "Container": 10,
+      "Alphabet": 10,
+      "Reputation": 10
+    },
+    "Timers": {
+      "Epoch": 300000,
+      "Emit": 600000,
+      "StopEstimation": {
+        "Mul": 1,
+        "Div": 1
+      },
+      "CollectBasicIncome": {
+        "Mul": 1,
+        "Div": 1
+      },
+      "DistributeBasicIncome": {
+        "Mul": 1,
+        "Div": 1
+      }
+    },
+    "Emit": {
+      "Mint": {
+        "CacheSize": 100,
+        "Threshold": 100,
+        "Value": 2
+      },
+      "Gas": {
+        "BalanceThreshold": 100
+      },
+      "Storage": {
+        "Amount": 1
+      }
+    },
+    "NetmapCleaner": {
+      "Eenabled": false,
+      "Threshold": 3
+    },
+    "Audit": {
+      "Timeout": {
+        "Get": 5000,
+        "Head": 5000,
+        "RangeHash": 5000,
+        "Search": 10000
+      },
+      "PDP": {
+        "PoolSize": 100,
+        "MaxSleepInterval": 10
+      },
+      "POR": {
+        "PoolSize": 100
+      },
+      "Task": {
+        "QueueCapacity": 100,
+        "PoolSize": 10
+      }
+    },
+    "Indexer": {
+      "CacheTimeout": 100
+    },
+    "Settlement": {
+      "BasicIncomeRate": 10,
+      "AuditFee": 1000
+    },
+    "Fee": {
+      "MainChain": 5000,
+      "SideChain": 5000
+    },
+    "Storage": {
+      "Address": "/ip4/0.0.0.0/tcp/8080",
+      "Port": 8080,
+      "Attributes": [
+        "Capacity: 0",
+        "Continent: Asia",
+        "Country: China",
+        "CountryCode: CN",
+        "Location: Shanghai",
+        "Price: 22",
+        "UN-LOCODE: CN SGH"
+      ],
+      "Shards": [
+        {
+          "UseWriteCache": true,
+          "RemoveBatchSize": 100,
+          "RemoverInterval": 60000,
+          "WriteCache": {
+            "Path": "./Data/0/Data_WriteCache",
+            "MaxMemorySize": 1073741824,
+            "MaxObjectSize": 67108864,
+            "SmallObjectSize": 32768,
+            "MaxDBSize": 0
+          },
+          "BlobStorage": {
+            "Path": "./Data/0/Data_BlobStorage",
+            "Compress": true,
+            "ShallowDepth": 4,
+            "SmallSizeLimit": 1048576,
+            "Blobovnicza": {
+              "Size": 1073741824,
+              "ShallowDepth": 2,
+              "ShallowWidth": 2,
+              "OpenCacheSize": 16
+            }
+          },
+          "Metabase": {
+            "Path": "./Data/0/Data_Metabase"
+          }
+        },
+        {
+          "UseWriteCache": true,
+          "WriteCache": {
+            "Path": "./Data/1/Data_WriteCache",
+            "MaxMemorySize": 1073741824,
+            "MaxObjectSize": 67108864,
+            "SmallObjectSize": 32768,
+            "MaxDbSize": 0
+          },
+          "BlobStorage": {
+            "Path": "./Data/1/Data_BlobStorage",
+            "Compress": true,
+            "ShallowDepth": 4,
+            "SmallSizeLimit": 1048576,
+            "Blobovnicza": {
+              "Size": 1073741824,
+              "ShallowDepth": 2,
+              "ShallowWidth": 2,
+              "OpenCacheSize": 16
+            }
+          },
+          "Metabase": {
+            "Path": "./Data/1/Data_Metabase"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "DeployContracts": [
+    {
+      "Name": "Balance Contract",
+      "NefFilePath": "./Config/Contracts/balance/balance_contract.nef",
+      "ManifestPath": "./Config/Contracts/balance/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "Netmap Contract",
+      "NefFilePath": "./Config/Contracts/netmap/netmap_contract.nef",
+      "ManifestPath": "./Config/Contracts/netmap/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "Container Contract",
+      "NefFilePath": "./Config/Contracts/container/container_contract.nef",
+      "ManifestPath": "./Config/Contracts/container/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "Neofs Contract",
+      "NefFilePath": "./Config/Contracts/neofs/neofs_contract.nef",
+      "ManifestPath": "./Config/Contracts/neofs/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "Neofsid Contract",
+      "NefFilePath": "./Config/Contracts/neofsid/neofsid_contract.nef",
+      "ManifestPath": "./Config/Contracts/neofsid/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "Audit Contract",
+      "NefFilePath": "./Config/Contracts/audit/audit_contract.nef",
+      "ManifestPath": "./Config/Contracts/audit/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "AlphabetAz Contract",
+      "NefFilePath": "./Config/Contracts/alphabet/alphabet_contract.nef",
+      "ManifestPath": "./Config/Contracts/alphabet/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "AlphabetBuky Contract",
+      "NefFilePath": "./Config/Contracts/alphabet/alphabet_contract.nef",
+      "ManifestPath": "./Config/Contracts/alphabet/config.json",
+      "accountIndex": 1
+    },
+    {
+      "Name": "AlphabetDobro Contract",
+      "NefFilePath": "./Config/Contracts/alphabet/alphabet_contract.nef",
+      "ManifestPath": "./Config/Contracts/alphabet/config.json",
+      "accountIndex": 2
+    },
+    {
+      "Name": "AlphabetGlagoli Contract",
+      "NefFilePath": "./Config/Contracts/alphabet/alphabet_contract.nef",
+      "ManifestPath": "./Config/Contracts/alphabet/config.json",
+      "accountIndex": 3
+    },
+    {
+      "Name": "AlphabetJest Contract",
+      "NefFilePath": "./Config/Contracts/alphabet/alphabet_contract.nef",
+      "ManifestPath": "./Config/Contracts/alphabet/config.json",
+      "accountIndex": 4
+    },
+    {
+      "Name": "AlphabetVedi Contract",
+      "NefFilePath": "./Config/Contracts/alphabet/alphabet_contract.nef",
+      "ManifestPath": "./Config/Contracts/alphabet/config.json",
+      "accountIndex": 5
+    },
+    {
+      "Name": "AlphabetZhivete Contract",
+      "NefFilePath": "./Config/Contracts/alphabet/alphabet_contract.nef",
+      "ManifestPath": "./Config/Contracts/alphabet/config.json",
+      "accountIndex": 6
+    },
+    {
+      "Name": "Processing Contract",
+      "NefFilePath": "./Config/Contracts/processing/processing_contract.nef",
+      "ManifestPath": "./Config/Contracts/processing/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "Proxy Contract",
+      "NefFilePath": "./Config/Contracts/proxy/proxy_contract.nef",
+      "ManifestPath": "./Config/Contracts/proxy/config.json",
+      "accountIndex": 0
+    },
+    {
+      "Name": "Reputation Contract",
+      "NefFilePath": "./Config/Contracts/reputation/reputation_contract.nef",
+      "ManifestPath": "./Config/Contracts/reputation/config.json",
+      "accountIndex": 0
+    }
+  ]
+}
